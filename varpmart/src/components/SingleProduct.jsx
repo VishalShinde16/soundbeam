@@ -13,15 +13,17 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     /* padding: 10px 10px; */
-    margin: 0 20px 20px 20px ;
+    margin: 20px ;
     width:15% ;
     height: 250px;
     overflow: hidden;
-    border-radius: 10px;
-    background-color: white;
+    border-radius: 5px;
+    /* background-color: #2a2a2a; */
+    background-color: transparent;
+   
     cursor: pointer;
     &:hover{    
-        box-shadow: 0px 4px 8px lightgray;
+        box-shadow: 0px 4px 8px black;
     }
 `
 
@@ -43,17 +45,20 @@ const InfoSection = styled.div`
     flex-direction: column;
     /* margin-top: 10px; */
     padding: 5px 20px;
+    color:white;
     /* background-color: yellow; */
 `
 
 const ProductName = styled.h3`
-    font-weight: 500;
+    font-weight: 400;
+    font-size: 1.2rem;
 `
 const Price = styled.h2`
     margin: 5px 0px;
     font-weight: 300;
     font-size: medium;
     display: flex;
+    color:#d0b48f;
     align-items: center;
 `
 

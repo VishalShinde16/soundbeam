@@ -88,6 +88,7 @@ const Register = () => {
 
                         const res = await axios.post("http://localhost:5000/auth/register",userData)
                         alert(res)
+                        window.location.href = '/login'
                     }catch(err){
                         alert(err)
                     }

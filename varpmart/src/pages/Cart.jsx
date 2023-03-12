@@ -5,15 +5,20 @@ import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Link } from 'react-router-dom'
+import Subscribe from '../components/Subscribe'
 
+const ParentContainer = styled.div`
+    background-color: #2d2d2d;
+    color: white;
+`
 const Container = styled.div`
     padding: 20px;
 `
 const Header = styled.div`
     /* background-color: yellow; */
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     margin: 0 0 20px 0;
     width: 100%;
@@ -22,6 +27,7 @@ const HeaderTitle = styled.h2`
     font-weight: 500;
     /* margin-bottom: 40px; */
     letter-spacing: 2px;
+    color:#d0b48f;
 `
 const HeaderButtons = styled.div`
     display: flex;
@@ -33,9 +39,15 @@ const HeaderButtons = styled.div`
 `
 const HeaderButton = styled.button`
     padding: 5px 10px;
-    background-color: black;
-    color: white;
+    background-color: transparent;
+    color: lightgray;
+    border: 1px solid #d0b48f;
     cursor: pointer;
+
+    &:hover{
+        background-color: #d0b48f;
+        transition: 0.3s ease-in-out;
+    }
 `
 
 const Main = styled.div`
@@ -47,13 +59,14 @@ const Main = styled.div`
 const CartSection = styled.div`
     flex:0.7;
     padding: 10px;
-    box-shadow: 0 4px 8px lightgray;
+    /* box-shadow: 0 4px 8px lightgray; */
     background-color: white;
     border-radius: 5px;
     height: 85vh;
+    margin-top: 1rem;
     overflow-y: scroll;
     scroll-behavior: smooth;
-
+    background-color: transparent;
     &::-webkit-scrollbar{
         width: 2px;
         /* color: gray; */
@@ -67,7 +80,7 @@ const CartSection = styled.div`
 `
 
 const Table = styled.table`
-    background-color: white;
+    background-color: transparent;
     /* border: 1px solid lightgray; */
     border-collapse: collapse;
     width: 100%;
@@ -80,6 +93,8 @@ const TableHeading = styled.th`
     border-top: none;
     padding: 5px;
     font-weight: 500;
+    color: #d0b48f;
+    text-align: center;
 `
 
 const TableRow = styled.tr`
@@ -96,16 +111,17 @@ const ProductImage = styled.img`
 `
 
 const SummarySection = styled.div`
-background-color: white;
+background-color: transparent;
+color: lightgray;
 flex:0.25;
 display: flex;
 flex-direction: column;
 justify-content: center;
 padding: 20px;
-border-radius: 10px;
-
+/* border-radius: 10px; */
+/* border:1px solid #d0b48f; */
 /* cursor: pointer; */
-box-shadow: 0 4px 8px lightgray;
+box-shadow: 0 4px 8px black;
 
 /* &:hover{
     box-shadow: 0 4px 8px lightgray;
@@ -114,8 +130,9 @@ box-shadow: 0 4px 8px lightgray;
 
 const SummaryHeading = styled.h2`
     text-align: center;
-    font-weight: 500;
+    font-weight: 400;
     margin-bottom: 40px;
+    font-size: 2rem;
     letter-spacing: 2px;
 `
 
@@ -127,20 +144,29 @@ const SummaryItem = styled.div`
 `
 
 const SummaryItemName = styled.h3`
-    font-weight: 300;
+    font-weight: 200;
+    font-size: 1.3rem;
 `
 
 const SummaryItemPrice = styled.h3`
-    font-weight: 400;
+    font-weight: 300;
+    font-size: 1.3rem;
 `
 
 const CheckOutButton = styled.button`
     margin: 20px;
     padding: 10px;
     font-size: large;
-    background-color: black;
+    border:1px solid #d0b48f;
+    background-color: #d0b48f;
     color: white;
+    
     cursor: pointer;
+
+    &:hover{
+        background-color: transparent;
+        color:#d0b48f;
+    }
 `
 
 const Cart = () => {
@@ -245,15 +271,15 @@ const Cart = () => {
 
     }
     return (
-        <>
+        <ParentContainer>
             <Navbar />
             <Container style={{ marginTop: '60px' }}>
                 <Header>
-                    <HeaderTitle>Your Cart</HeaderTitle>
-                    <HeaderButtons>
                         <HeaderButton><Link to='/products' style={{ textDecoration: 'none', color: 'white' }}>Continue Shopping</Link></HeaderButton>
+                    <HeaderTitle>Your Cart</HeaderTitle>
+                    {/* <HeaderButtons> */}
                         <HeaderButton onClick={EmptyCart}>Clear Cart</HeaderButton>
-                    </HeaderButtons>
+                    {/* </HeaderButtons> */}
 
                 </Header>
                 <Main>
@@ -276,8 +302,8 @@ const Cart = () => {
                                         <TableData>{product.name}</TableData>
                                         <TableData>{product.price}</TableData>
                                         <TableData>{product.quantity}</TableData>
-                                        <TableData style={{ borderRight: 'none' }}>{product.subtotal}</TableData>
-                                        <TableData><DeleteForeverIcon onClick={() => RemoveProduct(product.id)} style={{ cursor: 'pointer', color: 'red' }} /></TableData>
+                                        <TableData>{product.subtotal}</TableData>
+                                        <TableData  style={{ borderRight: 'none' }}><DeleteForeverIcon onClick={() => RemoveProduct(product.id)} style={{ cursor: 'pointer', color: 'red' }} /></TableData>
                                     </TableRow>
                                 ))}
 
@@ -308,8 +334,9 @@ const Cart = () => {
                     </SummarySection>
                 </Main>
             </Container>
+            {/* <Subscribe/> */}
             <Footer />
-        </>
+        </ParentContainer>
     )
 }
 

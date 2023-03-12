@@ -109,7 +109,7 @@ const Login = () => {
                 <Button onClick={loginuser}>LOGIN</Button>
 
                 <Links href='#'>Forgot password ?</Links>
-                <Links to='/regitser'>Create a new account</Links>
+                <Links href='/register'>Create a new account</Links>
 
             </Wrapper>
         </Container>

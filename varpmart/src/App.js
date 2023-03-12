@@ -7,6 +7,8 @@ import Home from './pages/Home';
 import AllProducts from './pages/AllProducts';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
+import MyOrders from './pages/MyOrders';
+import OrderDetails from './pages/OrderDetails';
 
 
 function App() {
@@ -20,6 +22,10 @@ function App() {
         <Route path='/products' element={<AllProducts/>}/>
         <Route path='/products/:id' element={<ProductDetails/>}/>
         <Route path='/cart' element={<Cart/>}/>
+        <Route path='/orders/:userid' element={<MyOrders/>}/>
+        <Route path='/orders/:userid/:orderid' element={<OrderDetails/>}/>
+
+
 
       </Routes>
     </div>

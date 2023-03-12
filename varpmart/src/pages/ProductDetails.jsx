@@ -8,40 +8,51 @@ import axios from 'axios';
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
+const ParentContainer = styled.div`
+    background-color: #2d2d2d;
+    overflow-x: hidden;
+`
 const Container = styled.div`
-    min-height: 85vh;
+    /* min-height: 85vh; */
 `
 
 const Wrapper = styled.div`
     display: flex;
     padding: 50px;
+    height: 90vh;
 
 `
 const ImgContainer = styled.div`
-    flex:1;
-
+    flex:0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* background-color: yellow; */
 `
 const Image = styled.img`
-    height: 75vh;
-    width: 80%;
+   
     object-fit: cover;
 
 
 `
 const InfoContainer = styled.div`
-    flex:1;
+    flex:0.5;
 `
 
 const Title = styled.h1`
     font-weight: 400;
+    color:#d0b48f;
 `
 const Desc = styled.p`
     margin: 20px 0;
+    color:lightgray;
 `
 const Price = styled.h1`
     font-weight: 100;
     font-size: 40px;
     margin: 40px 0 20px 0 ;
+    color:white;
 `
 
 
@@ -58,12 +69,14 @@ const AmountContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    color: white;
 `
 
 const Amount = styled.span`
     width: 30px;
     height: 30px;
-    border: 1px solid teal;
+    border: 1px solid #d0b48f;
+    color:white;
     border-radius: 10px;
     font-weight: 700;
     margin: 0 5px;
@@ -73,17 +86,21 @@ const Amount = styled.span`
 `
 
 const Button = styled.button`
-    padding: 10px 10px;
-    border:2px solid teal;
-    background-color: white;
-    font-weight: 500;
-    cursor: pointer;
-
-    transition: all 0.3s ease;
-    &:hover{
-        background-color: teal;
-        color: white;
-    }
+    background-color: transparent;
+  border: 0.5px solid #d0b48f;
+  font-weight: 200;
+  color: #d0b48f;
+  width: 50%;
+  padding: 15px 10px;
+  margin: 40px 0;
+  cursor: pointer;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  &:hover{
+    background-color: #d0b48f;
+    color: #2d2d2d;
+    transition: 0.5s ease-in-out;
+  }
 `
 
 const ProductDetails = () => {
@@ -138,10 +155,10 @@ const ProductDetails = () => {
         }
     }
     return (
-        <>
+        <ParentContainer>
 
             <Navbar />
-            <Container style={{ marginTop: '60px' }}>
+            <Container >
                 {Object.keys(productInfo).length > 0 ?
                     <Wrapper>
                         <ImgContainer>
@@ -170,7 +187,7 @@ const ProductDetails = () => {
                 }
                 <Footer />
             </Container>
-        </>
+        </ParentContainer>
     )
 }
 

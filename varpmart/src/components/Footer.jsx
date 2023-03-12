@@ -9,14 +9,17 @@ import PlaceIcon from '@mui/icons-material/Place';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
+import HeadsetIcon from '@mui/icons-material/Headset';
+
 
 
 const Container = styled.div`
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
-    color: whitesmoke;
-    background-color: #000000e8;
+    color: gray;
+    background-color: #ececec;
+    padding: 20px;
 `
 
 const Left = styled.div`
@@ -26,7 +29,10 @@ const Left = styled.div`
     padding: 20px;
 `
 
-const Logo = styled.h1``
+const Logo = styled.h2`
+    font-weight: 400;
+    font-size: 1.7rem;
+`
 const Desc = styled.p`
     margin: 20px 0px;
 `
@@ -39,8 +45,8 @@ const SocialIcon = styled.div`
     height:30px;
     border-radius: 50%;
     
-    background-color:#${props =>props.color};
-    color:white;
+    background-color:transparent;
+    color:#d0b48f;
 
     /* color:#${props =>props.color}; */
 
@@ -53,13 +59,14 @@ const SocialIcon = styled.div`
 
 const Center = styled.div`
     flex:1;
-    padding:0 20px;
+    padding:25px;
 
  
 `
 
-const Title = styled.h3`
+const Title = styled.h4`
     margin-bottom: 30px;
+    font-weight: 400;
 `
 const List = styled.ul`
     margin: 0;
@@ -75,7 +82,8 @@ const ListItem = styled.li`
 `
 const Right = styled.div`
     flex:1;
-    padding: 20px;
+    padding: 25px;
+    
     /* background-color: yellow; */
 
 `
@@ -91,7 +99,7 @@ const Footer = () => {
     return (
         <Container>
             <Left>
-                <Logo>VARP Mart</Logo>
+                <Logo><HeadsetIcon/> Soundbeam</Logo>
                 <Desc>Lorem ipsum, am ratione doloribus vitae! Dolorum eos magni perferendis cumque quasi temporibus, molestias excepturi quae officiis vel aspernatur dolorem.</Desc>
 
                 <SocialContainer>
