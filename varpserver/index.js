@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express')
 const app = express();
+
 const cors = require("cors")
 const mongoose = require("mongoose")
 
@@ -10,6 +11,7 @@ const authRoute = require('./routes/auth')
 const userRoute = require('./routes/user')
 const productRoute = require('./routes/product')
 const orderRoute = require('./routes/order')
+const stripeRoute = require('./routes/stripe')
 
 //middlewares
 app.use(express.json());
@@ -27,10 +29,17 @@ mongoose.connect(process.env.MONGO_URL)
 //listening
 const port = process.env.PORT || 8080;
 
+// app.use((req, res, next) => {
+//     res.setHeader("Content-Security-Policy", "script-src 'self' https://checkout.razorpay.com");
+//     next();
+//   });
+
+
 app.use('/user',userRoute);
 app.use('/auth',authRoute);
 app.use('/product',productRoute);
 app.use('/order',orderRoute);
+app.use('/checkout',stripeRoute);
 
 
 app.listen(port,()=>{

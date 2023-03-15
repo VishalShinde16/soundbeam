@@ -6,7 +6,10 @@ import Navbar from '../components/Navbar'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Link } from 'react-router-dom'
 import Subscribe from '../components/Subscribe'
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
+import StripeCheckout from 'react-stripe-checkout';
+// import Razorpay from 'razorpay-checkout';
 const ParentContainer = styled.div`
     background-color: #2d2d2d;
     color: white;
@@ -169,11 +172,27 @@ const CheckOutButton = styled.button`
     }
 `
 
+// function loadScript(src) {
+// 	return new Promise((resolve) => {
+// 		const script = document.createElement('script')
+// 		script.src = src
+// 		script.onload = () => {
+// 			resolve(true)
+// 		}
+// 		script.onerror = () => {
+// 			resolve(false)
+// 		}
+// 		document.body.appendChild(script)
+// 	})
+// }
+
 const Cart = () => {
 
 
     let sub = 0;
     const [userid, setUserid] = React.useState('');
+    const [stripeToken,setStripeToken] =React.useState(null);
+    // const[paymentError,setPaymentError] = React.useState(null);
 
     // const [cartProductData,setCartProductData] = React.useState([]);
     let cartdata = [];
@@ -249,12 +268,50 @@ const Cart = () => {
             }
         }
     }
-    function handleCheckout() {
+
+
+    async function handleCheckout() {
+        // const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+
+		// if (!res) {
+		// 	alert('Razorpay SDK failed to load. Are you online?')
+		// 	return
+		// }
+
+        // const options = {
+        //     key:'rzp_test_HJE5Pzx7n0kKHc',
+        //     amount: 1000,
+        //     name:'SoundBeam',
+        //     description:'purchase description',
+        //     image:'https://www.shutterstock.com/image-vectorheadphones-vector-icon-black-symbolsilhouette-260nw-1756855643.jpg',
+            
+        //     handler:async function(response){
+        //         const {razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
+        //         try{
+        //             const res = await axios.post("http::/localhost:5000/checkout/razorpayment",JSON.stringify({razorpay_payment_id, razorpay_order_id, razorpay_signature }))
+                    
+        //             console.log(res)
+        //         }catch(err){
+        //             console.log(err)
+        //             setPaymentError('payment failed.')
+        //         }
+        //     },
+        //     prefill:{
+        //         email:'soundbeam@gmail.com',
+        //         contact:'9999999999'
+        //     }
+        // };
+
+        // const rzp = new Razorpay(options);
+        // rzp.open();
+        
         userid ?
             <>
                 {cartdata.length < 1 ? alert('Cart is empty')
                 :
                 <>
+                    {
+                    }
                     {alert("Order has been placed!")}
                     {putOrdersToDB()}
                     {updateDb()}
@@ -270,6 +327,31 @@ const Cart = () => {
             </>
 
     }
+
+    const onToken = (token)=>{
+        setStripeToken(token)
+    }
+
+    React.useEffect(()=>{
+        const makeRequest = async ()=>{
+            try{
+                const res = await axios.post(
+                    "http://localhost:5000/checkout/payment",
+                    {
+                        tokenId:stripeToken.id,
+                        amount:Math.round(sub + sub * 0.18 + sub * 0.05)*100,
+                    }
+                );
+                
+                console.log(res.data)
+            }catch(err){
+                console.log(err)
+            }
+        };
+
+        stripeToken && makeRequest()
+
+    },[stripeToken])
     return (
         <ParentContainer>
             <Navbar />
@@ -300,9 +382,9 @@ const Cart = () => {
                                     <TableRow key={product.id}>
                                         <TableData style={{ borderLeft: 'none', padding: '10px 0px' }}><ProductImage src={product.img} /></TableData>
                                         <TableData>{product.name}</TableData>
-                                        <TableData>{product.price}</TableData>
+                                        <TableData><CurrencyRupeeIcon style={{color:'lightgray',height:'1.2rem'}}/>{product.price}</TableData>
                                         <TableData>{product.quantity}</TableData>
-                                        <TableData>{product.subtotal}</TableData>
+                                        <TableData><CurrencyRupeeIcon style={{color:'lightgray',height:'1.2rem'}}/>{product.subtotal}</TableData>
                                         <TableData  style={{ borderRight: 'none' }}><DeleteForeverIcon onClick={() => RemoveProduct(product.id)} style={{ cursor: 'pointer', color: 'red' }} /></TableData>
                                     </TableRow>
                                 ))}
@@ -320,17 +402,31 @@ const Cart = () => {
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemName>GST</SummaryItemName>
-                            <SummaryItemPrice>{sub * 0.18}</SummaryItemPrice>
+                            <SummaryItemPrice>{Math.round(sub * 0.18)}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemName>Delievery Charges</SummaryItemName>
-                            <SummaryItemPrice>{sub * 0.05}</SummaryItemPrice>
+                            <SummaryItemPrice>{Math.round(sub * 0.05)}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemName style={{ fontWeight: '500' }}>Total</SummaryItemName>
-                            <SummaryItemPrice style={{ fontWeight: '500' }}>{sub + sub * 0.18 + sub * 0.05}</SummaryItemPrice>
+                            <SummaryItemPrice style={{ fontWeight: '500' }}><CurrencyRupeeIcon style={{color:'lightgray',height:'1.2rem'}}/>{Math.round(sub + sub * 0.18 + sub * 0.05)}</SummaryItemPrice>
                         </SummaryItem>
-                        <CheckOutButton onClick={handleCheckout}>Checkout</CheckOutButton>
+
+                        <StripeCheckout
+                            name="Soundbeam"
+                            image = "/https://www.shutterstock.com/image-vectorheadphones-vector-icon-black-symbolsilhouette-260nw-1756855643.jpg"
+                            billingAddress
+                            shippingAddress
+                            description={`Your total is ${Math.round(sub + sub * 0.18 + sub * 0.05)}`}
+                            amount = {Math.round(sub + sub * 0.18 + sub * 0.05)*100}
+                            token = {onToken}
+                            currency = 'USD'
+                            stripeKey = "pk_test_51Ml8c9SCcmZcu4zPa3e9e8G0CVjJHKCrQmFGEkQelBApreKf3hKyPDvxr9vsLWNnUvSfphvccloKmymRwbT7hY4l00UvPo3d43"
+                        >
+                            <CheckOutButton >Checkout</CheckOutButton>
+                        </StripeCheckout>
+                    
                     </SummarySection>
                 </Main>
             </Container>

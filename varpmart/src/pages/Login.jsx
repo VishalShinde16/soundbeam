@@ -3,6 +3,11 @@ import styled from 'styled-components'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
+import bg2 from '../images/bg2.jpg'
+import bg1 from '../images/bg1.jpg'
+import bg3 from '../images/bg3.jpg'
+
+
 
 const Container = styled.div`
     width: 100vw;
@@ -10,8 +15,8 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)),
-                    url('https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') center;
+    background: linear-gradient(rgba(1,1,1,0.5),rgba(100,100,100,0.8)),
+                    url(${bg2}) center;
     background-size: cover;
 
     
@@ -22,7 +27,9 @@ const Wrapper = styled.div`
     flex-direction: column;
     padding: 20px;
     width: 30%;
-    background-color: white;
+    background-color: #2d2d2d;
+    box-shadow: 0 4px 8px black;
+    border-radius: 5px;
 
 `
 
@@ -30,6 +37,7 @@ const Title = styled.h1`
     font-weight: 400;
     font-size: 24px;
     margin: 10px 0;
+    color:#d0b48f;
 `
 
 const Form = styled.form`
@@ -45,25 +53,35 @@ const Input = styled.input`
     margin:0 50px 15px 0px;
     padding: 10px;
     font-size: 14px;
-    
+    background-color: transparent;
+    border:1px solid gray;
+    color:lightgray;
     
 `
 
 const Button = styled.button`
     width: 40%;
-    padding: 10px;
+    padding: 5px 10px;
     background-color: teal;
-    border: none;
-    color: white;
+    border: 1px solid #d0b48f;
+    color: #2d2d2d;
+    background-color: #d0b48f;
     cursor: pointer;
     margin-bottom: 10px;
+    font-size: 1rem;
+    &:hover{
+        background-color: transparent;
+        color:#d0b48f;
+        transition: 0.3s ease-in-out;
+    }
 `
 
 const Links = styled.a`
     text-decoration: underline;
     margin: 5px 0 ;
     cursor: pointer;
-    color: black;
+    color: gray;
+    
 `
 const Login = () => {
     const [userData,setUserData] = React.useState({username:'',password:''});
@@ -106,7 +124,7 @@ const Login = () => {
                     <Input placeholder='Password' name='password' value = {userData.password} onChange={handleChange}/>
                 </Form>
 
-                <Button onClick={loginuser}>LOGIN</Button>
+                <Button onClick={loginuser}>Login</Button>
 
                 <Links href='#'>Forgot password ?</Links>
                 <Links href='/register'>Create a new account</Links>

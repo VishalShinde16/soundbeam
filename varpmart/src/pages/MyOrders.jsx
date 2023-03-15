@@ -8,6 +8,7 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
 const ParentContainer = styled.div`
   background-color: #2d2d2d;
@@ -126,7 +127,7 @@ const MyOrders = () => {
               <TableHeading>Total Products</TableHeading>
               <TableHeading>Total Price</TableHeading>
               <TableHeading>Status</TableHeading>
-              <TableHeading style={{borderRight:'none'}}>Action</TableHeading>
+              <TableHeading style={{borderRight:'none'}}>View</TableHeading>
 
             </TableRow>
 
@@ -141,7 +142,7 @@ const MyOrders = () => {
                   {/* <TableData>{userid}</TableData> */}
                   <TableData>{createdAt.replace("T"," ")}</TableData>
                   <TableData>{totalproducts.length}</TableData>
-                  <TableData>{totalprice}</TableData>
+                  <TableData><CurrencyRupeeIcon style={{color:'lightgray',height:'1rem'}}/>{totalprice}</TableData>
                   <TableData >{status}</TableData>
 
                   <TableData style={{borderRight:'none'}}>

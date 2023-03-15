@@ -9,6 +9,7 @@ import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import MyOrders from './pages/MyOrders';
 import OrderDetails from './pages/OrderDetails';
+import About from './pages/About';
 
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/orders/:userid' element={<MyOrders/>}/>
         <Route path='/orders/:userid/:orderid' element={<OrderDetails/>}/>
+        <Route path='/about' element={<About/>}/>
+
 
 
 

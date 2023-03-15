@@ -15,7 +15,7 @@ const Container = styled.div`
     /* padding: 10px 10px; */
     margin: 20px ;
     width:15% ;
-    height: 250px;
+    height: 280px;
     overflow: hidden;
     border-radius: 5px;
     /* background-color: #2a2a2a; */

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import Badge from '@mui/material/Badge';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -51,40 +51,49 @@ const ContactSection = styled.div`
 `
 
 const MenuItem = styled.div`
-    color: white;
+    /* color: white; */
     padding: 3px 6px;
     letter-spacing: 1px;
     font-weight: 300;
     font-size: 1rem;
     &:hover{
         /* background-color: black; */
-        color:transparent ;
+        /* color:transparent ; */
         color: #d3b795;
     }
 `
+
+const navlinkstyle = ({isActive})=>{
+    return{
+        color: isActive ? '#d0b48f' : 'white',
+        textDecoration:'none'
+    }
+}
+
 const Navbar = () => {
     
     function signout(){
         localStorage.clear()
+        window.location.href('/')
         window.location.reload(false);
     }
   return (
     <Container>
         <LogoSection>
-        <Link style={{textDecoration: 'none'}} to={'/'}><MenuItem><SubLogo><HeadsetIcon/>Soundbeam</SubLogo></MenuItem></Link>
-            <Link style={{textDecoration: 'none'}} to={'/'}><MenuItem>Home</MenuItem></Link>
-            <Link style={{textDecoration: 'none'}} to={'/products'}><MenuItem>Products</MenuItem></Link>
-            <Link style={{textDecoration: 'none'}} to={'/'}><MenuItem>About</MenuItem></Link>
-            {localStorage.getItem('userid') && <Link style={{textDecoration: 'none'}} to={`/orders/${JSON.parse(localStorage.getItem('userid'))}`}><MenuItem>My Orders</MenuItem></Link>}
+        <NavLink style={navlinkstyle}><MenuItem><SubLogo><HeadsetIcon/>Soundbeam</SubLogo></MenuItem></NavLink>
+            <NavLink style={navlinkstyle} to={'/'}><MenuItem>Home</MenuItem></NavLink>
+            <NavLink style={navlinkstyle} to={'/products'}><MenuItem>Products</MenuItem></NavLink>
+            <NavLink style={navlinkstyle} to={'/about'}><MenuItem>About</MenuItem></NavLink>
+            {localStorage.getItem('userid') && <NavLink style={navlinkstyle} to={`/orders/${JSON.parse(localStorage.getItem('userid'))}`}><MenuItem>My Orders</MenuItem></NavLink>}
         </LogoSection>
         <ContactSection>
             
-            {localStorage.getItem('userid') ? <Link style={{textDecoration: 'none'}} to={'/'}><MenuItem onClick={signout} style={{color:'#d3b795'}}>Sign-Out</MenuItem></Link>:<Link style={{textDecoration: 'none'}} to={'/login'}><MenuItem>Sign-In</MenuItem></Link> }
-            <Link style={{textDecoration: 'none'}} to={'/cart'}><MenuItem>
+            {localStorage.getItem('userid') ? <NavLink style={navlinkstyle} to={'/'}><MenuItem onClick={signout} style={{color:'#d3b795'}}>Sign-Out</MenuItem></NavLink>:<NavLink style={navlinkstyle} to={'/login'}><MenuItem>Sign-In</MenuItem></NavLink> }
+            <NavLink style={navlinkstyle} to={'/cart'}><MenuItem>
             <Badge badgeContent={localStorage.getItem('userid') && Object.keys(localStorage).length > 0 ? Object.keys(localStorage).length-1:Object.keys(localStorage).length} color="secondary">
               <ShoppingCartOutlinedIcon/>
             </Badge>
-            </MenuItem></Link>
+            </MenuItem></NavLink>
 
         </ContactSection>
     </Container>

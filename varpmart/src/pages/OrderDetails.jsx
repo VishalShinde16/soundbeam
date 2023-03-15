@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
 const ParentContainer = styled.div`
     background-color: #2d2d2d;
@@ -194,7 +195,7 @@ const EditOrder = () => {
                 <Main>
                     <Header>
                     <h4 style={{fontWeight: '300'}}><b>Order Id:</b> {orderid}</h4>
-                    <h4 style={{fontWeight: '300'}}><b>Total Price: </b>{orderdata.totalprice}</h4>
+                    <h4 style={{fontWeight: '300'}}><b>Total Price: </b><CurrencyRupeeIcon style={{color:'#d0b48f',height:'1.6rem'}}/>{orderdata.totalprice}</h4>
                     </Header>
                     <Orderdata>
                         <Table>
