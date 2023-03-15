@@ -10,6 +10,8 @@ import Cart from './pages/Cart';
 import MyOrders from './pages/MyOrders';
 import OrderDetails from './pages/OrderDetails';
 import About from './pages/About';
+import Success from './pages/Success';
+import Failure from './pages/Failure';
 
 
 function App() {
@@ -26,6 +28,10 @@ function App() {
         <Route path='/orders/:userid' element={<MyOrders/>}/>
         <Route path='/orders/:userid/:orderid' element={<OrderDetails/>}/>
         <Route path='/about' element={<About/>}/>
+        <Route path='/checkout/success' element={<Success/>}/>
+        <Route path='/checkout/failure' element={<Failure/>}/>
+
+
 
 
 

@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom'
 import Subscribe from '../components/Subscribe'
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
+import {loadStripe} from '@stripe/stripe-js'
+
 import StripeCheckout from 'react-stripe-checkout';
 // import Razorpay from 'razorpay-checkout';
 const ParentContainer = styled.div`
@@ -186,16 +188,40 @@ const CheckOutButton = styled.button`
 // 	})
 // }
 
+const stripePromise = loadStripe('pk_test_51Ml8c9SCcmZcu4zPa3e9e8G0CVjJHKCrQmFGEkQelBApreKf3hKyPDvxr9vsLWNnUvSfphvccloKmymRwbT7hY4l00UvPo3d43');
+
+
 const Cart = () => {
 
 
     let sub = 0;
     const [userid, setUserid] = React.useState('');
-    const [stripeToken,setStripeToken] =React.useState(null);
+    // const [stripeToken,setStripeToken] =React.useState({});
     // const[paymentError,setPaymentError] = React.useState(null);
 
     // const [cartProductData,setCartProductData] = React.useState([]);
     let cartdata = [];
+    
+    // const [paymentdata,setPaymentdata] = React.useState({   
+    //     price:1.0,
+    // })
+    
+    const createCheckoutSession = async()=>{
+        const stripe = await stripePromise;
+        // console.log(cartdata);
+        const checkoutSession = await axios.post("http://localhost:5000/checkout/payment",
+        {
+            items:cartdata,
+        })
+
+        const result = await stripe.redirectToCheckout({
+            sessionId:checkoutSession.data.id,
+
+        });
+        if(result.error){
+            alert(result.error.message)
+        }
+    };
 
 
 
@@ -271,51 +297,14 @@ const Cart = () => {
 
 
     async function handleCheckout() {
-        // const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
-
-		// if (!res) {
-		// 	alert('Razorpay SDK failed to load. Are you online?')
-		// 	return
-		// }
-
-        // const options = {
-        //     key:'rzp_test_HJE5Pzx7n0kKHc',
-        //     amount: 1000,
-        //     name:'SoundBeam',
-        //     description:'purchase description',
-        //     image:'https://www.shutterstock.com/image-vectorheadphones-vector-icon-black-symbolsilhouette-260nw-1756855643.jpg',
-            
-        //     handler:async function(response){
-        //         const {razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
-        //         try{
-        //             const res = await axios.post("http::/localhost:5000/checkout/razorpayment",JSON.stringify({razorpay_payment_id, razorpay_order_id, razorpay_signature }))
-                    
-        //             console.log(res)
-        //         }catch(err){
-        //             console.log(err)
-        //             setPaymentError('payment failed.')
-        //         }
-        //     },
-        //     prefill:{
-        //         email:'soundbeam@gmail.com',
-        //         contact:'9999999999'
-        //     }
-        // };
-
-        // const rzp = new Razorpay(options);
-        // rzp.open();
         
         userid ?
             <>
                 {cartdata.length < 1 ? alert('Cart is empty')
                 :
                 <>
-                    {
-                    }
-                    {alert("Order has been placed!")}
-                    {putOrdersToDB()}
-                    {updateDb()}
-                    {EmptyCart()}
+                    {await createCheckoutSession()}
+                    
                 </>    
             }
             </>
@@ -328,30 +317,30 @@ const Cart = () => {
 
     }
 
-    const onToken = (token)=>{
-        setStripeToken(token)
-    }
+    // const onToken = (token)=>{
+    //     setStripeToken(token)
+    // }
 
-    React.useEffect(()=>{
-        const makeRequest = async ()=>{
-            try{
-                const res = await axios.post(
-                    "http://localhost:5000/checkout/payment",
-                    {
-                        tokenId:stripeToken.id,
-                        amount:Math.round(sub + sub * 0.18 + sub * 0.05)*100,
-                    }
-                );
+    // React.useEffect(()=>{
+    //     const makeRequest = async ()=>{
+    //         try{
+    //             const res = await axios.post(
+    //                 "http://localhost:5000/checkout/payment",
+    //                 {
+    //                     tokenId:stripeToken.id,
+    //                     amount:Math.round(sub + sub * 0.18 + sub * 0.05)*100,
+    //                 }
+    //             );
                 
-                console.log(res.data)
-            }catch(err){
-                console.log(err)
-            }
-        };
+    //             console.log(res.data)
+    //         }catch(err){
+    //             console.log(err)
+    //         }
+    //     };
 
-        stripeToken && makeRequest()
+    //     stripeToken && makeRequest()
 
-    },[stripeToken])
+    // },[stripeToken])
     return (
         <ParentContainer>
             <Navbar />
@@ -400,20 +389,17 @@ const Cart = () => {
                             <SummaryItemName>Subtotal</SummaryItemName>
                             <SummaryItemPrice>{sub}</SummaryItemPrice>
                         </SummaryItem>
-                        <SummaryItem>
-                            <SummaryItemName>GST</SummaryItemName>
-                            <SummaryItemPrice>{Math.round(sub * 0.18)}</SummaryItemPrice>
-                        </SummaryItem>
+                        
                         <SummaryItem>
                             <SummaryItemName>Delievery Charges</SummaryItemName>
-                            <SummaryItemPrice>{Math.round(sub * 0.05)}</SummaryItemPrice>
+                            <SummaryItemPrice>50</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemName style={{ fontWeight: '500' }}>Total</SummaryItemName>
-                            <SummaryItemPrice style={{ fontWeight: '500' }}><CurrencyRupeeIcon style={{color:'lightgray',height:'1.2rem'}}/>{Math.round(sub + sub * 0.18 + sub * 0.05)}</SummaryItemPrice>
+                            <SummaryItemPrice style={{ fontWeight: '500' }}><CurrencyRupeeIcon style={{color:'lightgray',height:'1.2rem'}}/>{Math.round(sub + 50)}</SummaryItemPrice>
                         </SummaryItem>
 
-                        <StripeCheckout
+                        {/* <StripeCheckout
                             name="Soundbeam"
                             image = "/https://www.shutterstock.com/image-vectorheadphones-vector-icon-black-symbolsilhouette-260nw-1756855643.jpg"
                             billingAddress
@@ -423,9 +409,9 @@ const Cart = () => {
                             token = {onToken}
                             currency = 'USD'
                             stripeKey = "pk_test_51Ml8c9SCcmZcu4zPa3e9e8G0CVjJHKCrQmFGEkQelBApreKf3hKyPDvxr9vsLWNnUvSfphvccloKmymRwbT7hY4l00UvPo3d43"
-                        >
-                            <CheckOutButton >Checkout</CheckOutButton>
-                        </StripeCheckout>
+                        > */}
+                            <CheckOutButton onClick={handleCheckout}>Checkout</CheckOutButton>
+                        {/* </StripeCheckout> */}
                     
                     </SummarySection>
                 </Main>
