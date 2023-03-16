@@ -261,39 +261,39 @@ const Cart = () => {
 
 
 
-    const putOrdersToDB = () => {
+    // const putOrdersToDB = () => {
 
-        const order = {
-            userid: JSON.parse(userid),
-            cartproducts: cartdata,
-            totalprice: sub
-        }
+    //     const order = {
+    //         userid: JSON.parse(userid),
+    //         cartproducts: cartdata,
+    //         totalprice: sub
+    //     }
         
-        try {
-            axios.post("http://localhost:5000/order/addorder", order)
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    //     try {
+    //         axios.post("http://localhost:5000/order/addorder", order)
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
 
-    const updateDb =async ()=>{
+    // const updateDb =async ()=>{
 
-        for(let i = 0 ; i < cartdata.length; i++){
-            try{
-                const olddata = await axios.get(`http://localhost:5000/product/${cartdata[i].id}`)
+    //     for(let i = 0 ; i < cartdata.length; i++){
+    //         try{
+    //             const olddata = await axios.get(`http://localhost:5000/product/${cartdata[i].id}`)
                
-                const newdata = {
-                    ...olddata,
-                    quantity:Number(olddata.data.quantity)-Number(cartdata[i].quantity)
-                }
+    //             const newdata = {
+    //                 ...olddata,
+    //                 quantity:Number(olddata.data.quantity)-Number(cartdata[i].quantity)
+    //             }
 
-                await axios.put(`http://localhost:5000/product/${cartdata[i].id}`,newdata)
+    //             await axios.put(`http://localhost:5000/product/${cartdata[i].id}`,newdata)
             
-            }catch(err){
-                console.log(err)
-            }
-        }
-    }
+    //         }catch(err){
+    //             console.log(err)
+    //         }
+    //     }
+    // }
 
 
     async function handleCheckout() {

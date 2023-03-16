@@ -5,13 +5,14 @@ import axios from 'axios'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 const Container = styled.div`
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)),
-                    url('https://img.freepik.com/premium-photo/model-being-covered-by-shopping-bags-copy-space_23-2148674119.jpg?w=2000') center;
+    overflow-x: hidden;
+    /* background: linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0.5)),
+                    url('https://img.freepik.com/premium-photo/model-being-covered-by-shopping-bags-copy-space_23-2148674119.jpg?w=2000') center; */
     background-size: cover;
 `
 
@@ -21,6 +22,8 @@ const Wrapper = styled.div`
     padding: 20px;
     width: 40%;
     background-color: white;
+    box-shadow: 0 4px 8px gray;
+    border-radius: 10px;
 
   
 `
@@ -55,10 +58,11 @@ const Aggrement = styled.span`
 const Button = styled.button`
     width: 40%;
     padding: 10px;
-    background-color: teal;
+    background-color: #1d4bd1;
     border: none;
     color: white;
     cursor: pointer;
+    border-radius: 5px;
 `
 const EditProduct = () => {
 

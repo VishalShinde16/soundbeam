@@ -22,12 +22,13 @@ const Container = styled.div`
 const NavbarSection = styled.div`
   flex: 0.17;
   background-color: white;
-  box-shadow: 0 4px 8px lightgray;
+  box-shadow: 0 4px 8px gray;
 `
 const MainSection = styled.div`
   flex: 0.82;
   height: 100vh;
   overflow-y: scroll;
+  overflow-x: hidden;
 `
 
 function App() {

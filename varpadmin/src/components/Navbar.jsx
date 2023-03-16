@@ -9,6 +9,7 @@ import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import HeadsetIcon from '@mui/icons-material/Headset';
 
 const Container = styled.div`
     background-color: white;
@@ -35,11 +36,21 @@ const LogoSection = styled.div`
     /* background-color: blue; */
     
 `
-
 const SubLogo = styled.div`
-    border: 1px solid black;
+    display: flex;
+align-items: center;
+color: white;
+font-size: 1.7rem;
+font-weight: 400;
     padding: 3px 6px;
+    margin-bottom: 4px;
+    gap:5px;
+    background-color: #1d4bd1;
+    /* text-shadow: 4px px #1d4bd1; */
+    border-radius: 5px;
 `
+
+
 
 
 
@@ -107,10 +118,9 @@ function handlelogout(){
 const Navbar = () => {
   return (
     <Container>
-        <LogoSection>
-            <SubLogo style={{backgroundColor:'black',color:'white'}}>VARP</SubLogo>
-            <SubLogo>MART</SubLogo>
-        </LogoSection>
+        
+        <SubLogo><HeadsetIcon style={{fontSize:'1.6rem',marginTop:'5px'}}/>Soundbeam</SubLogo>
+        
         <MenuContainer>
             
             <NavLink to='/' style={navlinkstyle}>

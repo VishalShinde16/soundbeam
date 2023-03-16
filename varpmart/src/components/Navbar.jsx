@@ -74,9 +74,11 @@ const Navbar = () => {
     
     function signout(){
         localStorage.clear()
-        window.location.href('/')
-        window.location.reload(false);
+        window.location.href = '/'
+        window.location.reload(false)
+        // console.log('signout')
     }
+
   return (
     <Container>
         <LogoSection>

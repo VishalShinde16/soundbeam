@@ -129,14 +129,14 @@ const Orders = () => {
             {allOrders.length > 0 &&
 
               allOrders.map(({ _id,userid,createdAt,totalproducts,totalprice,status }, index) => (
-
+                
                 <TableRow key={_id}>
-
+                  
 
                   <TableData style={{borderLeft:'none'}}>{_id}</TableData>
                   <TableData>{userid}</TableData>
                   <TableData>{createdAt.replace("T"," ")}</TableData>
-                  <TableData>{totalproducts.length}</TableData>
+                  <TableData>{totalproducts.reduce((acc, product) => acc + product.quantity, 0)}</TableData>
                   <TableData>{totalprice}</TableData>
                   <TableData >{status}</TableData>
 
